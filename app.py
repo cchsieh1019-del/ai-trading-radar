@@ -192,4 +192,4 @@ if st.sidebar.button("🚀 啟動 AI 雙刀流回測", type="primary"):
             fig.add_trace(go.Scatter(x=block_d, y=block_p, mode='markers', name='🚫 高階 AI 攔截之假突破', marker=dict(color='gray', symbol='x', size=12, line=dict(width=2, color='black'))))
         
         fig.update_layout(height=600, hovermode="x unified", template="plotly_white", margin=dict(l=0, r=0, t=30, b=0))
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
