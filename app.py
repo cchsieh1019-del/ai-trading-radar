@@ -25,9 +25,19 @@ st.sidebar.markdown("---")
 st.sidebar.header("🤖 AI 機器學習引擎")
 use_ai = st.sidebar.toggle("啟用 AI 真假突破濾網", value=True)
 
+import requests # 記得確認這行如果在最上面沒有的話，這裡會用到
+
 @st.cache_data 
 def load_data(sym):
-    stock = yf.Ticker(sym)
+    # 1. 建立一個虛擬的網路會話 (Session)
+    session = requests.Session()
+    # 2. 幫這個會話掛上「User-Agent」，偽裝成是 Windows 電腦上的 Chrome 瀏覽器發出的請求
+    session.headers.update({
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+    })
+    
+    # 3. 把這個偽裝的 session 交給 yfinance 使用
+    stock = yf.Ticker(sym, session=session)
     df = stock.history(period="3y")[['High', 'Low', 'Close', 'Volume']]
     return df
 
